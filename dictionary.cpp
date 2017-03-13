@@ -47,24 +47,21 @@ void dictionary::sort_words()
 
 int dictionary::binary_search(string key)
 {
-    int iterator = word_list.size()/2;
-	int curr = iterator; //determines the next element to be compared
-    while(word_list.at(curr) != key){
-        iterator = iterator/2;
-        if(iterator == 0){
-            iterator++;
-        }
-
-        if(curr == word_list.size() + 1 || curr == 0){ //could not find the key
-            return -1;
-        }
+	int high = word_list.size();
+    int low = 0;
+    int curr;
+    while(high >= low){
+        curr = (high + low)/2;
 
         if(word_list.at(curr) > key){ //iterates the current element
-            curr = curr - iterator;
+            high = curr - 1;
+        }
+        else if(word_list.at(curr) < key){
+            low = curr + 1;
         }
         else{
-            curr = curr + iterator;
+            return curr;
         }
     }
-    return curr;
+    return -1;
 }
