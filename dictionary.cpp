@@ -48,14 +48,18 @@ void dictionary::sort_words()
 int dictionary::binary_search(string key)
 {
     int iterator = word_list.size()/2;
-	int curr = iterator;
+	int curr = iterator; //determines the next element to be compared
     while(word_list.at(curr) != key){
         iterator = iterator/2;
         if(iterator == 0){
             iterator++;
         }
 
-        if(word_list.at(curr) > key){
+        if(curr == word_list.size() + 1 || curr == 0){ //could not find the key
+            return -1;
+        }
+
+        if(word_list.at(curr) > key){ //iterates the current element
             curr = curr - iterator;
         }
         else{

@@ -3,14 +3,16 @@
 
 #include <vector>
 #include <ostream>
+#include "d_matrix.h"
 
 using namespace std;
 
 class grid {
 public:
     void read(string fileName);
+    matrix<char> getGrid();
 private:
-    vector<vector<char>> grid;
+    matrix<char> grid;
 };
 
 
