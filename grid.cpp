@@ -18,18 +18,22 @@ void grid::read(string fileName) {
         istringstream s(str);
         int rows;
         int cols;
-        s >> rows;
-        s >> cols;
-        g.resize(rows,cols);
+        f >> rows;
+        f >> cols;
+		cout << rows << cols << endl;
+        g.resize(rows+1,cols+1);
 
         while(getline(f,str)){
             istringstream s(str);
 
             while(s >> temp){
+				cout << temp;
                 g[n][m] = temp;
                 m++;
             }
             n++;
+			m = 0;
+			cout << endl;
         }
     }
     else{
@@ -45,21 +49,17 @@ static void findMatches(dictionary dict, grid g){
 	int cols = g2.cols();
 	int rows = g2.rows();
 	string key = "";
-	int i2 = 0, j2 = 0, dir = 0, found;
-	cout << "Cols " << cols << " Rows " << rows << endl;
+	int i2 = 0, j2 = 0, dir, found;
 	for (int i = 0; i < rows; i++)
 	{
+		i2 = i;
 		for (int j = 0; j < cols; j++)
 		{
-			key += g2[i][j];
-			found = dict.binary_search(key);
-			if (found != -1)
-			{
-				cout << key << endl;
-			}
+			j2 = j;
+			dir = 0;
+			key += g2[i2][j2];
 			while (dir < 8)
 			{
-				cout << "Key: " << key << endl;
 				switch (dir)
 				{
 				case 0: //RIGHT
@@ -89,25 +89,26 @@ static void findMatches(dictionary dict, grid g){
 				case 7: //UP RIGHT
 					i2--;
 					j2++;
+					break;
 				}
-				if (i2 > rows)
+				if (i2 >= rows)
 				{
 					i2 = 0;
 				}
 
 				if (i2 < 0)
 				{
-					i2 = rows;
+					i2 = rows-1;
 				}
 
-				if (j2 > cols)
+				if (j2 >= cols)
 				{
 					j2 = 0;
 				}
 
 				if (j2 < 0)
 				{
-					j2 = cols;
+					j2 = cols-1;
 				}
 				if (j2 == j && i2 == i)
 				{
@@ -116,10 +117,17 @@ static void findMatches(dictionary dict, grid g){
 					continue;
 				}
 				key += g2[i2][j2];
-				found = dict.binary_search(key);
+				if (key.length() >= 5)
+				{
+					found = dict.binary_search(key);
+				}
+				else
+				{
+					continue;
+				}
 				if (found != -1)
 				{
-					cout << key << endl;
+					cout << "Found " << key << endl;
 				}
 			}
 		}
@@ -132,8 +140,8 @@ static void search(){
     string str;
 
     d.read_words();
-    //d.sort_words();
-    cout << "Input grid file name";
+    d.sort_words();
+    cout << "Input grid file name: ";
     cin >> str;
     g.read(str);
 
