@@ -8,7 +8,7 @@ void dictionary::read_words()
 {
 	ifstream dict_file;
 	string word;
-	dict_file.open("dictionary.txt");
+	dict_file.open("sorted_dict.txt");
 	if (dict_file.is_open())
 		while (getline(dict_file, word))
 		{
@@ -22,19 +22,20 @@ void dictionary::read_words()
 
 ostream& operator<< (ostream& ostr, const dictionary& dict)
 {
-	for (int i = 0; i < dict.word_list.size(); i++)
+	for (unsigned int i = 0; i < dict.word_list.size(); i++)
 	{
-		cout << dict.word_list.at(i);
+		ostr << dict.word_list.at(i);
 	}
+	return ostr;
 }
 
 void dictionary::sort_words()
 {
 	int min;
-	for (int i = 0; i < word_list.size(); i++)
+	for (unsigned int i = 0; i < word_list.size(); i++)
 	{
 		min = i;
-		for (int j = i+1; j < word_list.size(); j++)
+		for (unsigned int j = i+1; j < word_list.size(); j++)
 		{
 			if (word_list.at(j) < word_list.at(min))
 			{

@@ -4,6 +4,8 @@
 #include <sstream>
 #include <iostream>
 
+using namespace std;
+
 void grid::read(string fileName) {
     ifstream f;
     string str;
@@ -14,14 +16,15 @@ void grid::read(string fileName) {
         while(getline(f,str)){
             istringstream s(str);
 
-            if(n >= grid.rows()){
-                grid.resize(grid.rows() + 1, 0);
+            if(n >= g.rows()){
+                g.resize(g.rows() + 1, 0);
             }
 
             while(s >> temp){
-                grid[n].push_back(temp);
-                std::cout << temp << " " << n << std::endl;
+                g[n].push_back(temp);
+				cout << temp << " ";
             }
+			cout << endl;
             n++;
         }
     }
@@ -30,11 +33,93 @@ void grid::read(string fileName) {
     }
 }
 matrix<char> grid::getGrid(){
-    return grid;
+    return g;
 }
 
 static void findMatches(dictionary dict, grid g){
+	matrix<char> g2 = g.getGrid();
+	int cols = g2.cols();
+	int rows = g2.rows();
+	string key = "";
+	int i2 = 0, j2 = 0, dir = 0, found;
+	cout << "Cols " << cols << " Rows " << rows << endl;
+	for (int i = 0; i < rows; i++)
+	{
+		for (int j = 0; j < cols; j++)
+		{
+			key += g2[i][j];
+			found = dict.binary_search(key);
+			if (found != -1)
+			{
+				cout << key << endl;
+			}
+			while (dir < 8)
+			{
+				cout << "Key: " << key << endl;
+				switch (dir)
+				{
+				case 0: //RIGHT
+					j2++;
+					break;
+				case 1: //DOWN RIGHT
+					i2++;
+					j2++;
+					break;
+				case 2: //DOWN
+					i2++;
+					break;
+				case 3: //DOWN LEFT
+					i2++;
+					j2--;
+					break;
+				case 4: //LEFT
+					j2--;
+					break;
+				case 5: //UP LEFT
+					i2--;
+					j2--;
+					break;
+				case 6: //UP
+					i2--;
+					break;
+				case 7: //UP RIGHT
+					i2--;
+					j2++;
+				}
+				if (i2 > rows)
+				{
+					i2 = 0;
+				}
 
+				if (i2 < 0)
+				{
+					i2 = rows;
+				}
+
+				if (j2 > cols)
+				{
+					j2 = 0;
+				}
+
+				if (j2 < 0)
+				{
+					j2 = cols;
+				}
+				if (j2 == j && i2 == i)
+				{
+					dir++;
+					key = "";
+					continue;
+				}
+				key += g2[i2][j2];
+				found = dict.binary_search(key);
+				if (found != -1)
+				{
+					cout << key << endl;
+				}
+			}
+		}
+	}
 }
 
 static void search(){
@@ -43,8 +128,7 @@ static void search(){
     string str;
 
     d.read_words();
-    d.sort_words();
-
+    //d.sort_words();
     cout << "Input grid file name";
     cin >> str;
     g.read(str);
@@ -54,6 +138,6 @@ static void search(){
 
 int main(){
     search();
-
+	system("pause");
     return 0;
 }

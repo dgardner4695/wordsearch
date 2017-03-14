@@ -12,7 +12,7 @@ public:
     void read(string fileName);
     matrix<char> getGrid();
 private:
-    matrix<char> grid;
+	matrix<char> g;
 };
 
 
