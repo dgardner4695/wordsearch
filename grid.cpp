@@ -3,6 +3,7 @@
 #include <fstream>
 #include <sstream>
 #include <iostream>
+#include <cstdlib>
 
 using namespace std;
 
@@ -11,20 +12,23 @@ void grid::read(string fileName) {
     string str;
     char temp;
     int n = 0;
+    int m = 0;
     f.open(fileName);
     if(f.is_open()){
+        istringstream s(str);
+        int rows;
+        int cols;
+        s >> rows;
+        s >> cols;
+        g.resize(rows,cols);
+
         while(getline(f,str)){
             istringstream s(str);
 
-            if(n >= g.rows()){
-                g.resize(g.rows() + 1, 0);
-            }
-
             while(s >> temp){
-                g[n].push_back(temp);
-				cout << temp << " ";
+                g[n][m] = temp;
+                m++;
             }
-			cout << endl;
             n++;
         }
     }
