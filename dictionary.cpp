@@ -2,11 +2,13 @@
 #include <fstream>
 #include <string>
 #include "dictionary.h"
+#include "heap.h"
 
 using namespace std;
+
 void dictionary::read_words()
 {
-	ifstream dict_file;
+	/*ifstream dict_file;
 	string word;
 	dict_file.open("sorted_dict.txt");
 	if (dict_file.is_open())
@@ -17,14 +19,16 @@ void dictionary::read_words()
 	else
 	{
 		cout << "Error opening file for reading" << endl;
-	}
+	}*/
+
+    word_list = {"a", "d", "b", "x", "c", "s"};
 }
 
 ostream& operator<< (ostream& ostr, const dictionary& dict)
 {
 	for (unsigned int i = 0; i < dict.word_list.size(); i++)
 	{
-		ostr << dict.word_list.at(i);
+		ostr << dict.word_list.at(i) << endl;
 	}
 	return ostr;
 }
@@ -65,4 +69,12 @@ int dictionary::binary_search(string key)
         }
     }
     return -1;
+}
+
+void dictionary::dictHeapSort() {
+    heap<string> h(word_list.size() + 1);
+
+    h.initializeMaxHeap(word_list);
+
+    word_list = h.heapSort();
 }

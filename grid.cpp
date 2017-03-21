@@ -1,5 +1,6 @@
 #include "grid.h"
 #include "dictionary.h"
+#include "heap.h"
 #include <fstream>
 #include <sstream>
 #include <iostream>
@@ -149,7 +150,12 @@ static void search(){
 }
 
 int main(){
-    search();
-	system("pause");
-    return 0;
+    dictionary dict;
+    dict.read_words();
+    cout << "Before Sorting: " << endl << dict;
+
+    dict.dictHeapSort();
+
+    cout << "After Sorting " << endl << dict;
+
 }
