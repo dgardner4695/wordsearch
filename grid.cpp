@@ -148,14 +148,3 @@ static void search(){
 
     findMatches(d,g);
 }
-
-int main(){
-    dictionary dict;
-    dict.read_words();
-    cout << "Before Sorting: " << endl << dict;
-
-    dict.dictHeapSort();
-
-    cout << "After Sorting " << endl << dict;
-
-}

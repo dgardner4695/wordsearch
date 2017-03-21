@@ -8,7 +8,7 @@ using namespace std;
 
 void dictionary::read_words()
 {
-	/*ifstream dict_file;
+	ifstream dict_file;
 	string word;
 	dict_file.open("sorted_dict.txt");
 	if (dict_file.is_open())
@@ -19,9 +19,7 @@ void dictionary::read_words()
 	else
 	{
 		cout << "Error opening file for reading" << endl;
-	}*/
-
-    word_list = {"a", "d", "b", "x", "c", "s"};
+	}
 }
 
 ostream& operator<< (ostream& ostr, const dictionary& dict)

@@ -15,7 +15,7 @@ public:
     int parent(int n);
     T getIten(int n);
     void initializeMaxHeap(vector<T> v);
-    void maxHeapify(int n);
+    void maxHeapify(int i, int max);
     void buildMaxHeap();
     vector <T> heapSort();
 
@@ -42,8 +42,6 @@ void heap<T>::initializeMaxHeap(vector<T> v){
     for(int i = 0; i < v.size(); i++){
         maxHeap.at(i+1) = v.at(i);
     }
-
-    //maxHeap.at(0) = NULL;
     buildMaxHeap();
 }
 
@@ -52,26 +50,26 @@ void heap<T>::buildMaxHeap() {
     int heapFloor = size/2;
 
     for(int i = heapFloor; i > 0; i--){
-        maxHeapify(i);
+        maxHeapify(i, size);
     }
 }
 
 template <typename T>
-void heap<T>::maxHeapify(int i) {
+void heap<T>::maxHeapify(int i, int max) {
     int left = heap::left(i);
     int right = heap::right(i);
     int largest = i;
 
-    if(left < size && maxHeap.at(left) > maxHeap.at(largest)){  //check both child branches
+    if(left < max && maxHeap.at(left) > maxHeap.at(largest)){  //check both child branches
         largest = left;
     }
-    if(right < size && maxHeap.at(right) > maxHeap.at(largest)){
+    if(right < max && maxHeap.at(right) > maxHeap.at(largest)){
         largest = right;
     }
 
     if(largest != i){
         swap(maxHeap.at(i), maxHeap.at(largest)); //swap parent with the largest child
-        maxHeapify(i);
+        maxHeapify(largest, max);
     }
 }
 
@@ -82,17 +80,15 @@ vector<T> heap<T>::heapSort() {
 
     while(end > 1){
         swap(maxHeap.at(end), maxHeap.at(1));
-        end = end - 1;
-        maxHeapify(1);
+        end--;
+        maxHeapify(1, end);
     }
-
-    maxHeapify(1);
 
     for(int i = 1; i < size; i++){
         temp.push_back(maxHeap.at(i));
     }
 
-    return maxHeap;
+    return temp;
 }
 
 
