@@ -1,5 +1,6 @@
 #include "grid.h"
 #include "dictionary.h"
+#include "heap.h"
 #include <fstream>
 #include <sstream>
 #include <iostream>
@@ -146,10 +147,4 @@ static void search(){
     g.read(str);
 
     findMatches(d,g);
-}
-
-int main(){
-    search();
-	system("pause");
-    return 0;
 }

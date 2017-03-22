@@ -1,5 +1,6 @@
 #include <ostream>
 #include <vector>
+#include "heap.h"
 using namespace std;
 class dictionary
 {
@@ -11,6 +12,7 @@ public:
 	int partition(vector<string> &A, int left, int right);
 	void quick_sort(vector<string> &A, int left, int right);
 	vector<string>& get_words();
+    void dictHeapSort();
 private:
 	vector<string> word_list;
 };

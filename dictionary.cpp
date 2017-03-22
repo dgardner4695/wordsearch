@@ -2,8 +2,10 @@
 #include <fstream>
 #include <string>
 #include "dictionary.h"
+#include "heap.h"
 
 using namespace std;
+
 void dictionary::read_words()
 {
 	ifstream dict_file;
@@ -96,4 +98,12 @@ int dictionary::binary_search(string key)
         }
     }
     return -1;
+}
+
+void dictionary::dictHeapSort() {
+    heap<string> h(word_list.size() + 1);
+
+    h.initializeMaxHeap(word_list);
+
+    word_list = h.heapSort();
 }
