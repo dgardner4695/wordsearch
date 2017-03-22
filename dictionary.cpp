@@ -8,7 +8,7 @@ void dictionary::read_words()
 {
 	ifstream dict_file;
 	string word;
-	dict_file.open("sorted_dict.txt");
+	dict_file.open("dictionary.txt");
 	if (dict_file.is_open())
 		while (getline(dict_file, word))
 		{
@@ -24,7 +24,7 @@ ostream& operator<< (ostream& ostr, const dictionary& dict)
 {
 	for (unsigned int i = 0; i < dict.word_list.size(); i++)
 	{
-		ostr << dict.word_list.at(i);
+		ostr << dict.word_list.at(i) << endl;
 	}
 	return ostr;
 }
@@ -44,6 +44,37 @@ void dictionary::sort_words()
 		}
 		swap(word_list.at(i), word_list.at(min));
 	}
+}
+
+int dictionary::partition(vector<string> &A, int left, int right)
+{
+	string pivot = A[right];
+	int i = left - 1;
+	for (int j = left; j < right; j++)
+	{
+		if (A[j] <= pivot)
+		{
+			i++;
+			swap(A[i], A[j]);
+		}
+	}
+	swap(A[i + 1], A[right]);
+	return i + 1;
+}
+
+void dictionary::quick_sort(vector<string> &A, int left, int right)
+{
+	if (left < right)
+	{
+		int s = partition(A, left, right);
+		quick_sort(A, left, s - 1);
+		quick_sort(A, s + 1, right);
+	}
+}
+
+vector<string>& dictionary::get_words()
+{
+	return word_list;
 }
 
 int dictionary::binary_search(string key)
