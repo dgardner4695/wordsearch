@@ -38,7 +38,7 @@ void grid::read(string fileName) {
         }
     }
     else{
-        std::cout << "Error reading from file";
+		std::cout << "Error reading from file" << endl;
     }
 }
 matrix<char> grid::getGrid(){
@@ -136,15 +136,44 @@ static void findMatches(dictionary dict, grid g){
 }
 
 static void search(){
+	int choice;
     dictionary d;
     grid g;
     string str;
 
     d.read_words();
-    d.sort_words();
+	cout << "Choose a search algorithm to use: " << endl;
+	cout << "1. Selection Sort" << endl;
+	cout << "2. Quick Sort" << endl;
+	cout << "3. Heap Sort" << endl;
+	cin >> choice;
+	while (choice > 3 || choice < 1)
+	{
+		cout << "Invalid choice, choose again: " << endl;
+		cin >> choice;
+	}
+	switch (choice)
+	{
+	case 1:
+		d.sort_words();
+		break;
+	case 2:
+		d.quick_sort(d.get_words(), 0, d.get_words().size() - 1);
+		break;
+	case 3:
+		d.dictHeapSort();
+	}
+	cout << "Sorted" << endl;
     cout << "Input grid file name: ";
     cin >> str;
     g.read(str);
 
     findMatches(d,g);
+}
+
+int main()
+{
+	search();
+	system("pause");
+	return 0;
 }
